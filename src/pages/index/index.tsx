@@ -1,45 +1,40 @@
-import React, { useCallback } from "react";
-import { View, Text, Button, Image } from "@tarojs/components";
-import { useEnv, useNavigationBar, useModal, useToast } from "taro-hooks";
-import logo from "./hook.png";
+import { View, Text, Button } from "@tarojs/components";
 
-import './index.scss'
+import "./index.scss";
+import { useEffect, useState } from "react";
+import Taro from "@tarojs/taro";
 
 const Index = () => {
-  const env = useEnv();
-  const { setTitle } = useNavigationBar({ title: "Taro Hooks" });
-  const showModal = useModal({
-    title: "Taro Hooks Canary!",
-    showCancel: false,
-    confirmColor: "#8c2de9",
-    confirmText: "支持一下"
-  });
-  const { show } = useToast({ mask: true });
+  const [poems, setPoems] = useState([]);
+  useEffect(() => {
+    const fetchPoems = async () => {
+      const { data } = await Taro.request({
+        url: "https://poem-api.vercel.app/api/poems",
+        method: "GET",
+      });
+      console.log(data);
+      setPoems(data);
+    };
+    fetchPoems();
+  }, []);
 
-  const handleModal = useCallback(() => {
-    showModal({ content: "不如给一个star⭐️!" }).then(() => {
-      show({ title: "点击了支持!" });
+  const jumpToPoemDetail = (poemId) => {
+    Taro.navigateTo({
+      url: `/pages/poem-detail/index?poemId=${poemId}`,
     });
-  }, [show, showModal]);
-
+  };
   return (
-    <View className="wrapper">
-      <Image className="logo" src={logo} />
-      <Text className="title">为Taro而设计的Hooks Library</Text>
-      <Text className="desc">
-        目前覆盖70%官方API. 抹平部分API在H5端短板. 提供近40+Hooks!
-        并结合ahook适配Taro! 更多信息可以查看新版文档: https://next-version-taro-hooks.vercel.app/
-      </Text>
-      <View className="list">
-        <Text className="label">运行环境</Text>
-        <Text className="note">{env}</Text>
-      </View>
-      <Button className="button" onClick={() => setTitle("Taro Hooks Nice!")}>
-        设置标题
-      </Button>
-      <Button className="button" onClick={handleModal}>
-        使用Modal
-      </Button>
+    <View className="poems">
+      {poems.map((poem: any) => (
+        <View key={poem.id} className="poem">
+          <View onClick={() => jumpToPoemDetail(poem.id)}>
+            <Text>{poem?.title}</Text>
+          </View>
+          <Text>
+            {poem?.type} · {poem?.author}
+          </Text>
+        </View>
+      ))}
     </View>
   );
 };
