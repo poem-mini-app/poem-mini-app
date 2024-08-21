@@ -18,7 +18,11 @@ const PoemDetail = () => {
         url: `https://poem-api.vercel.app/api/poems/${params?.poemId}`,
         method: "GET",
       });
-      console.log(data);
+
+      Taro.setNavigationBarTitle({
+        title: data?.title,
+      });
+
       setPoem(data);
     };
     fetchPoems();
