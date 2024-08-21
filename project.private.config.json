@@ -3,8 +3,8 @@
   "projectname": "ui",
   "setting": {
     "compileHotReLoad": true,
-    "urlCheck": false,
-    "bigPackageSizeSupport": false,
+    "urlCheck": true,
+    "bigPackageSizeSupport": true,
     "preloadBackgroundData": true
   },
   "libVersion": "3.5.3"
