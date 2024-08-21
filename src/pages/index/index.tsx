@@ -1,18 +1,17 @@
-import { View, Text, Button } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 
 import "./index.scss";
 import { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
 
 const Index = () => {
-  const [poems, setPoems] = useState([]);
+  const [poems, setPoems] = useState<any>([]);
   useEffect(() => {
     const fetchPoems = async () => {
       const { data } = await Taro.request({
         url: "https://poem-api.vercel.app/api/poems",
         method: "GET",
       });
-      console.log(data);
       setPoems(data);
     };
     fetchPoems();
@@ -25,9 +24,9 @@ const Index = () => {
   };
   return (
     <View className="poems">
-      {poems.map((poem: any) => (
-        <View key={poem.id} className="poem">
-          <View onClick={() => jumpToPoemDetail(poem.id)}>
+      {poems.map((poem) => (
+        <View key={poem?.id} className="poem">
+          <View onClick={() => jumpToPoemDetail(poem?.id)}>
             <Text>{poem?.title}</Text>
           </View>
           <Text>

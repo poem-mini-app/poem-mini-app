@@ -2,7 +2,7 @@
   "miniprogramRoot": "./",
   "projectname": "ui",
   "description": "poem ui",
-  "appid": "touristappid",
+  "appid": "wx330c54f1b582b962",
   "setting": {
     "urlCheck": true,
     "es6": false,

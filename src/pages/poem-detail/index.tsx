@@ -1,4 +1,4 @@
-import { View, Text, Button } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 
 import "./index.scss";
 import { useEffect, useState } from "react";
@@ -7,8 +7,6 @@ import Taro, { useRouter } from "@tarojs/taro";
 const PoemDetail = () => {
   const [poem, setPoem] = useState<any>(null);
   const router = useRouter();
-
-  useEffect(() => {}, []);
 
   useEffect(() => {
     const { params } = router;
