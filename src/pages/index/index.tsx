@@ -1,29 +1,11 @@
-import { View, Text,  } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import "./index.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Taro from "@tarojs/taro";
+import { POEMS } from "../../fixture";
 
 const Index = () => {
-  const [poems, setPoems] = useState<any>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    const fetchPoems = async () => {
-      try {
-        const { data } = await Taro.request({
-          url: "https://poem-api.vercel.app/api/poems",
-          method: "GET",
-        });
-        setPoems(data);
-      } catch (err) {
-        setError("无法加载诗词，请稍后再试。");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPoems();
-  }, []);
+  const [poems] = useState<IPoem[]>(POEMS);
 
   const jumpToPoemDetail = (poemId) => {
     Taro.navigateTo({
@@ -33,15 +15,13 @@ const Index = () => {
 
   return (
     <View className="poems">
-      {loading && <Text>加载中...</Text>}
-      {error && <Text>{error}</Text>}
-      {poems.map((poem) => (
-        <View key={poem?.id} className="poem">
-          <View onClick={() => jumpToPoemDetail(poem.id)}>
-            <Text>{poem.title}</Text>
+      {poems.map((poem, index) => (
+        <View key={index} className="poem">
+          <View onClick={() => jumpToPoemDetail(poem?.id)}>
+            <Text>{poem?.title}</Text>
           </View>
           <Text>
-            {poem.type} · {poem.author}
+            {poem?.type} · {poem?.author}
           </Text>
         </View>
       ))}
