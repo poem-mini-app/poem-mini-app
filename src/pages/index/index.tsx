@@ -18,9 +18,9 @@ const Index = () => {
       {poems.map((poem, index) => (
         <View key={index} className="poem">
           <View onClick={() => jumpToPoemDetail(poem?.id)}>
-            <Text>{poem?.title}</Text>
+            <Text className="title">{poem?.title}</Text>
           </View>
-          <Text>
+          <Text className="author">
             {poem?.type} · {poem?.author}
           </Text>
         </View>

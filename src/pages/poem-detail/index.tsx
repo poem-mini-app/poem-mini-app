@@ -11,6 +11,7 @@ const PoemDetail = () => {
   useEffect(() => {
     if (params?.poemId) {
       const selectedPoem = POEMS[+params.poemId - 1];
+      Taro.setNavigationBarTitle({ title: selectedPoem?.title || "唐诗" });
       setPoem(selectedPoem);
     }
   }, [params]);
@@ -19,11 +20,11 @@ const PoemDetail = () => {
     <View className="poem">
       {!!poem ? (
         <>
-          <Text>{poem.title}</Text>
-          <Text>
+          <Text className="title">{poem.title}</Text>
+          <Text className="author">
             {poem.type} · {poem.author}
           </Text>
-          <Text>{poem.contents}</Text>
+          <Text className="contents">{poem.contents}</Text>
         </>
       ) : (
         <Text>加载中...</Text>
